@@ -1421,6 +1421,8 @@
 
                         ref.addEventListener('loadstart', function(event) {
                             if (event.url.indexOf('http://localhost') == 0) {
+                                kc.clearToken();
+                                promise.setSuccess();
                                 ref.close();
                             }
                         });
@@ -1430,16 +1432,19 @@
                                 ref.close();
                             } else {
                                 error = true;
+                                promise.setError();
                                 ref.close();
                             }
                         });
 
                         ref.addEventListener('exit', function(event) {
                             if (error) {
-                                promise.setError();
+                                // now handled in loaderror case
+                                // promise.setError();
                             } else {
-                                kc.clearToken();
-                                promise.setSuccess();
+                                // now handles on loadStart
+                                // kc.clearToken();
+                                // promise.setSuccess();
                             }
                         });
 
